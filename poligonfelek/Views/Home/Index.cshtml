@@ -1,0 +1,372 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = null;
+    string domain = Session["ActiveDomain"].ToString();
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    @{
+        var obj = Session["Title"];
+        if (obj != null)
+        {
+            if (!string.IsNullOrEmpty(Session["Title"].ToString()))
+            {
+                <title>@Session["Title"].ToString()</title>
+            }
+            else
+            {
+                <title>ÇarkıFelek</title>
+            }
+        }
+        else
+        {
+            <title>ÇarkıFelek</title>
+        }
+    }
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="description" content="Katarbet Çarkıfelek ile hediyelere doyamayacaksınız.">
+    <link href="https://fonts.googleapis.com/css9b48.css?family=Open+Sans:300i,400,600i,800i&amp;subset=latin-ext" rel="stylesheet">
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="../assets2/img/favicon.png" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+
+    <link rel="stylesheet" href="../assets/css/main4f1a.css?v=20190426-1">
+    <script type="text/javascript" src="../assets/vendor/javascript-winwheel-2.6/Winwheel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+    <script src="https://unpkg.com/sweetalert2%407.0.9/dist/sweetalert2.all.js"></script>
+    <style>
+        body {
+            display: block;
+            background: url(../assets/img/bg/15.jpg) no-repeat top center #000000;
+            color: #444;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .the_wheel {
+            background: url(../assets/img/carkbg/5.png) transparent no-repeat top center !important;
+        }
+
+        .the_wheel_inner {
+            background: url(../assets/img/iccark/3.png) transparent no-repeat top center !important;
+        }
+
+        #LoadPopupLogin {
+            background: linear-gradient(130deg, #d8278f 0%, #160f20 100%) !important;
+        }
+
+            #LoadPopupLogin .row input[type="submit"] {
+                color: #000000 !important;
+                background-color: #fff !important;
+            }
+
+        @@media (min-width: 768px) {
+            #LoadPopupLogin {
+                min-width: 400px !important;
+            }
+        }
+
+        @@media (max-width: 640px) {
+            .the_wheel {
+                background: url(../assets/img/carkbg/5.png) transparent no-repeat top center !important;
+                background-size: cover !important;
+            }
+
+            .the_wheel_inner {
+                background: url(../assets/img/iccark/3.png) transparent no-repeat top center !important;
+                background-size: contain !important;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <a href="#" class="pageskin" target="_blank"></a>
+    <div id="MainForm" class="container " style="margin:0 auto;">
+
+        <div id="Header" class="row">
+            <div class="col-xs-12 text-center">
+                <p>&nbsp;</p>
+                <p>&nbsp;</p>
+            </div>
+        </div>
+
+        <div id="innerBlock" class="row">
+            <div class="the_wheel">
+                <canvas id="canvas" width="457" height="457"></canvas>
+                <div class="the_wheel_inner"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-7 text-center col-center-block">
+                <div class="button" href="#" id="SpinWheel">
+                    <div class="outer">
+                        <div class="height">
+                            <div class="inner"><img class="img-responsive" src="../assets/img/btn/4.png" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="button" href="#" id="ShowBalance">
+                    <div class="outer">
+                        <div class="height">
+                            <div class="inner"><h1></h1></div>
+                            <div class="inner"><h2></h2></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+
+
+    <div id="LoadPopupLose" style="display: none;">
+        <img class="img-responsive" src="../assets/img/lose/0.png" alt="">
+    </div>
+    <div id="LoadPopupWin" style="display: none;">
+        <h3></h3>
+        <img class="img-responsive" src="../assets/img/win/3.png" alt="">
+    </div>
+    <div id="LoadPopup1" style="display: none;">
+        <h3></h3>
+        <img class="img-responsive" src="../assets/img/win/3.png" alt="">
+    </div>
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+    <script>
+
+        var TicketID;
+        var UUID;
+        var PrizeText;
+        var newBalance;
+
+
+        function ShowLogin() {
+            jQuery("#LoadPopupLogin form")[0].reset();
+
+            jQuery.fancybox.open({
+                padding: 0,
+                src: '#LoadPopupLogin',
+                type: 'inline',
+                touch: false,
+                animationEffect: 'fade',
+                modal: true
+            });
+            jQuery('#SpinWheel').show();
+
+            return false;
+        }
+
+        jQuery('document').ready(function () {
+
+            TicketID = 0;
+            UUID = '';
+            PrizeText = '';
+
+
+
+
+            jQuery('#LoadPopupLogin form').submit(function () {
+                jQuery.ajax({
+                    url: '/Home/Login',
+                    type: 'post',
+                    data: jQuery("#LoadPopupLogin form").serialize(),
+                    success: function (data) {
+                        data = JSON.parse(data);
+                        if (data.success == 0) {
+                            swal(
+                                'Hata',
+                                data.msg,
+                                'error'
+                            );
+                            jQuery("#LoadPopupLogin form")[0].reset();
+                            return false;
+
+                        } else {
+
+                            TicketID = data.ticketnumber;
+                            UUID = data.userid;
+                            jQuery('#SpinWheel').show();
+                            jQuery.fancybox.close();
+
+                            return false;
+                        }
+                    }
+                });
+                return false;
+            });
+
+
+        });
+
+        wheelSpinning = false;
+
+        var theWheel = new Winwheel({
+            'drawMode': 'image',
+            'imageOverlay': true,
+            'outerRadius': 0,        // Set outer radius so wheel fits inside the background.
+            'numSegments': 10,         // Specify number of segments.
+            'segments':             // Define segments including colour and text.
+                [                               // font size and test colour overridden on backrupt segments.
+                    { 'text': 'TEXT 1' },
+                    { 'text': 'TEXT 2' },
+                    { 'text': 'TEXT 3' },
+                    { 'text': 'TEXT 4' },
+                    { 'text': 'TEXT 5' },
+                    { 'text': 'TEXT 6' },
+                    { 'text': 'TEXT 7' },
+                    { 'text': 'TEXT 8' },
+                    { 'text': 'TEXT 9' },
+                    { 'text': 'TEXT 10' },
+                ],
+            'animation':           // Specify the animation to use.
+            {
+                'type': 'spinToStop',
+                'duration': 5,     // Duration in seconds.
+                'spins': 5,     // Default number of complete spins.
+                'callbackFinished': 'alertPrize()'
+            }
+        });
+
+        var firstImg = new Image();
+
+        firstImg.onload = function () {
+            theWheel.wheelImage = firstImg;    // Make wheelImage equal the loaded image object.
+            theWheel.draw();                   // Also call draw function to render the wheel.
+        };
+
+        // Set the image source, once complete this will trigger the onLoad callback (above).
+        firstImg.src = "../assets/img/cark/4.png";
+
+
+        function alertPrize() {
+            var winningSegment = theWheel.getIndicatedSegment();
+
+            if (PrizeText === 'PAS') {
+
+
+                jQuery.fancybox.open({
+                    padding: 0,
+                    src: '#LoadPopupLose',
+                    type: 'inline',
+                    touch: true,
+                    animationEffect: 'fade',
+                    opts: {
+                        afterClose: function (instance, current) {
+                            jQuery('#MainForm').find('h2').html('10 Saniye içerisinde katarbet anasayfasına yönlendiriliyorsunuz...');
+                            window.setTimeout(function () {
+                                window.location.href = "https://t2m.io/katarbet"; //will redirect to your blog page
+                            }, 10000); //will call the function after 10 secs.
+                        }
+                    }
+                });
+            } else {
+                jQuery('#LoadPopupWin').find('h3').html(PrizeText + ' KAZANDINIZ');
+                jQuery('#MainForm').find('h1').html('Yeni Bakiyeniz : ' + newBalance);
+
+                jQuery.fancybox.open({
+                    padding: 0,
+                    src: '#LoadPopupWin',
+                    type: 'inline',
+                    touch: true,
+                    animationEffect: 'fade',
+                    opts: {
+                        afterClose: function (instance, current) {
+                            jQuery('#LoadPopupWin').find('h3').html('');
+                            jQuery('#MainForm').find('h2').html('10 Saniye içerisinde katarbet anasayfasına yönlendiriliyorsunuz...');
+                            window.setTimeout(function () {
+                                window.location.href = "https://t2m.io/katarbet"; //will redirect to your blog page
+                            }, 10000); //will call the function after 10 secs.
+
+
+                        }
+                    }
+                });
+            }
+            //jQuery('#MainForm').find('p').html('1 Saniye içerisinde katarbet sayfasına yönlendiriliyotsunuz...');
+            //window.setTimeout(function () {
+            //    window.location.href = "https://"+@domain+".com/"; //will redirect to your blog page
+            //}, 1000); //will call the function after 1 secs.
+            wheelSpinning = false;
+            return false;
+
+        }
+
+        function calculatePrizeOnServer() {
+
+            jQuery.ajax({
+                url: '@Url.Action("getPrizee","Home")',
+                type: 'get',
+                data: { formTicketID: TicketID, formUUID: UUID },
+                dataType: "json",
+                success: function (data) {
+                    var segmentNumber = data.success;
+                    jQuery('#MainForm').find('h2').html('10 Saniye içerisinde katarbet anasayfasına yönlendiriliyorsunuz...');
+                    window.setTimeout(function () {
+                        window.location.href = "https://t2m.io/katarbet"; //will redirect to your blog page
+                            }, 10000); //will call the function after 10 secs.
+                    if (segmentNumber > 0) {
+                        PrizeText = data.msg;
+                        newBalance = data.bresult;
+                        var stopAt = theWheel.getRandomForSegment(segmentNumber);
+                        theWheel.animation.stopAngle = stopAt;
+                        theWheel.startAnimation();
+
+                    } else {
+                        swal(
+                            'Hata',
+                            data.msg,
+                            'error'
+                        );
+                        jQuery("#LoadPopupLogin form")[0].reset();
+                        jQuery('#LoadPopupWin').find('h3').html('');
+
+
+                        return false;
+                    }
+                }
+            });
+        }
+
+        jQuery('#SpinWheel').click(function () {
+            if (wheelSpinning === false) {
+                wheelSpinning = true;
+                theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+                theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
+                theWheel.draw();
+                calculatePrizeOnServer();
+
+                jQuery('#SpinWheel').hide();
+                jQuery('#ShowBalance').show();
+
+
+                return false;
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

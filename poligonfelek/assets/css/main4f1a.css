@@ -1,0 +1,302 @@
+.snow-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    pointer-events: none;
+}
+
+#MainForm {
+    color: #fff;
+}
+
+#innerBlock {
+    position: relative;
+    margin-top: 150px;
+}
+
+.fancybox-container {
+    z-index: 1000 !important;
+}
+
+#LoadPopupLogin, #LoadPopupLose, #LoadPopupWin, #LoadPopup1 {
+    padding: 0;
+    background-color: transparent;
+}
+
+.fancybox-close-small::after {
+    background-color: #fff !important;
+}
+
+.line {
+    margin: 10px 0;
+    border-bottom: 1px solid #ddd;
+    height: 1px;
+    display: block;
+}
+
+#LoadPopupLogin {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+
+    background: -moz-linear-gradient(320deg, rgba(24,73,118,1) 0%, rgba(16,24,32,1) 100%); /* ff3.6+ */
+    background: -webkit-gradient(linear, left top, right bottom, color-stop(0%, rgba(24,73,118,1)), color-stop(100%, rgba(16,24,32,1))); /* safari4+,chrome */
+    background: -webkit-linear-gradient(320deg, rgba(24,73,118,1) 0%, rgba(16,24,32,1) 100%); /* safari5.1+,chrome10+ */
+    background: -o-linear-gradient(320deg, rgba(24,73,118,1) 0%, rgba(16,24,32,1) 100%); /* opera 11.10+ */
+    background: -ms-linear-gradient(320deg, rgba(24,73,118,1) 0%, rgba(16,24,32,1) 100%); /* ie10+ */
+    background: linear-gradient(130deg, rgba(24,73,118,1) 0%, rgba(16,24,32,1) 100%); /* w3c */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#184976', endColorstr='#101820',GradientType=1 ); /* ie6-9 */
+
+
+
+    max-width: 500px;
+    max-height: 400px;
+    display: block;
+    padding: 40px;
+
+    color: #ffffff;
+
+}
+
+#LoadPopupLogin p {
+    font-weight: bold;
+    font-size: 12px;
+    padding-top: 8px;
+}
+
+#LoadPopupLogin .row {
+    margin-bottom: 5px;
+}
+
+#LoadPopupLogin .row input {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    border: none;
+    padding: 5px 15px;
+    width: 100%;
+    color:#000000;
+}
+
+#LoadPopupLogin .row input[type="submit"] {
+    padding: 5px 15px;
+    color: #ffffff;
+    font-size: 16px;
+    background-color: #1655a4;
+}
+
+#LoadPopupLogin h2 {
+    font-weight: 600;
+    font-size: 37px;
+    margin:0;
+}
+
+#LoadPopupLogin h2 img{
+    margin:0 auto;
+}
+
+
+#LoadPopupLogin h2 span {
+    display: block;
+    font-size: 20px;
+    font-style: italic;
+
+}
+
+#LoadPopupWin h3 {
+    color: #fff;
+    text-align: center;
+    padding-top: 34%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    font-size: 32px;
+    font-style: italic;
+    font-weight: 800;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.the_wheel {
+    background: url(../img/cark-bg.html) transparent no-repeat top center;
+    width: 517px;
+    height: 615px;
+    display: block;
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+    background-size: contain;
+}
+
+.the_wheel_inner {
+    background: url(../img/ic-cark.html) transparent no-repeat top center;
+    width: 517px;
+    height: 517px;
+    display: block;
+    position: absolute;
+    z-index: 20;
+    background-size: contain;
+    left:0;
+    top:0;
+}
+
+.lineBlock {
+    background-color: #002881;
+    display: block;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    margin-bottom: 1px;
+    height: 40px;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#canvas {
+    padding-top: 31px;
+    padding-left:31px;
+    position: relative;
+    z-index: 10;
+    margin: 0 auto;
+}
+
+#Header {
+}
+
+#Header img {
+    margin: 0 auto;
+}
+
+#Header p {
+    font-size: 20px;
+    font-weight: 300;
+    font-style: italic;
+}
+
+
+@-webkit-keyframes FlashButton {
+    0% {
+        opacity: 0.1
+    }
+    100% {
+        opacity: 1
+    }
+}
+
+@-moz-keyframes FlashButton {
+    0% {
+        opacity: 0.1
+    }
+    100% {
+        opacity: 1
+    }
+}
+
+@-o-keyframes FlashButton {
+    0% {
+        opacity: 0.1
+    }
+    100% {
+        opacity: 1
+    }
+}
+
+@keyframes FlashButton {
+    0% {
+        opacity: 0.1
+    }
+    100% {
+        opacity: 1
+    }
+}
+
+#SpinWheel {
+    position: relative;
+    z-index: 100;
+    padding-top:10px;
+    -webkit-animation: FlashButton 1s infinite;
+    -moz-animation: FlashButton 1s infinite;
+    -o-animation: FlashButton 1s infinite;
+    animation: FlashButton 1s infinite;
+
+    display: inline-block;
+    text-align: center;
+}
+
+.col-center-block {
+    float: none;
+    display: block;
+    margin: 0 auto;
+    /* margin-left: auto; margin-right: auto; */
+}
+
+@media (max-width: 992px) {
+
+    #LoadPopupLogin {
+        max-width: 300px;
+        padding: 10px;
+    }
+
+    #LoadPopupLogin h2 {
+        font-size: 28px;
+    }
+
+    #innerBlock {
+        padding-top: 0;
+    }
+
+    .lineBlock .text-right {
+        text-align: center;
+    }
+
+}
+
+@media (max-width: 817px) {
+
+    #LoadPopupWin h3 {
+        padding-top: 30%;
+        font-size: 20px;
+    }
+
+}
+
+@media (max-width: 640px) {
+
+    #LoadPopupWin h3 {
+        padding-top: 34%;
+        font-size: 28px;
+    }
+
+
+    .the_wheel {
+        position: relative;
+        width: 300px;
+        height: 362px;
+
+        background: url(../img/cark-bg.html) transparent no-repeat top center;
+        background-size: cover;
+    }
+
+    #canvas {
+        padding: 0;
+        margin: 19px 0 0 16px;
+        width: 267px;
+
+    }
+
+    .the_wheel_inner {
+        width: 300px;
+        left: -2px;
+        top: 0;
+    }
+
+
+    #SpinWheel {
+        margin-top: 0;
+    }
+
+
+}

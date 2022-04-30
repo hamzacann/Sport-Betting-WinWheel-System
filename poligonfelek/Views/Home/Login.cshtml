@@ -1,0 +1,151 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    @{
+        var obj = Session["Title"];
+        if (obj != null)
+        {
+            if (!string.IsNullOrEmpty(Session["Title"].ToString()))
+            {
+                <title>@Session["Title"].ToString()</title>
+            }
+            else
+            {
+                <title>ÇarkıFelek</title>
+            }
+        }
+        else
+        {
+            <title>ÇarkıFelek</title>
+        }
+    }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <!-- External CSS libraries -->
+    <link type="text/css" rel="stylesheet" href="../assets2/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="../assets2/fonts/font-awesome/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="../assets2/fonts/flaticon/font/flaticon.css">
+
+    <!-- Favicon icon -->
+    <link rel="shortcut icon" href="../assets2/img/favicon.png" type="image/x-icon">
+
+    <!-- Google fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Custom Stylesheet -->
+    <link type="text/css" rel="stylesheet" href="../assets2/css/style.css">
+
+</head>
+<body id="top">
+    <div class="page_loader"></div>
+
+    <!-- Login 8 start -->
+    <div class="login-8">
+        <div class="container">
+            <div class="row login-box">
+                <div class="col-lg-7 col-md-12 form-info">
+                    <div class="form-section">
+                        <div class="logo clearfix">
+                            <a href="@Url.Action("Login", "Home")">
+                                <img src="../assets2/img/logos/logo.png" alt="logo">
+                            </a>
+                        </div>
+                        <h3>Katarbet hesabına giriş yap</h3>
+                        <div class="login-inner-form">
+                            <form action="@Url.Action("Login", "Home")" method="post">
+                                <div class="form-group form-box">
+                                    <input type="text" required name="username" class="form-control" placeholder="Kullanıcı Adı" aria-label="Username">
+                                    <i class="flaticon-mail-2"></i>
+                                </div>
+                                <div class="form-group form-box">
+                                    <input type="password" required name="password" class="form-control" autocomplete="off" placeholder="Şifre" aria-label="Password">
+                                    <i class="flaticon-password"></i>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <button type="submit" style="width:40%" class="btn btn-primary">Giriş</button>
+                                </div>
+                                @if (ViewBag.Error != null)
+                                {
+                                    <script type="text/javascript">
+
+            window.onload = function () {
+                alert("@ViewBag.Error");
+            };
+                                    </script>
+
+                                }
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 bg-img">
+                    <div class="info">
+                        @*<div class="btn-section clearfix">
+                            <a href="login-8.html" class="link-btn active btn-1 default-bg">Login</a>
+                            <a href="register-8.html" class="link-btn btn-1">Register</a>
+                        </div>*@
+                        <div class="info-text">
+                            <div class="waviy">
+                                <span style="--i:1">Ç</span>
+                                <span style="--i:2">A</span>
+                                <span style="--i:3">R</span>
+                                <span style="--i:4">K</span>
+                                <span style="--i:5">K</span>
+                                <span style="--i:6">I</span>
+                                <span style="--i:7">F</span>
+                                <span style="--i:8">E</span>
+                                <span style="--i:9">L</span>
+                                <span style="--i:10">E</span>
+                                <span style="--i:11">K</span>
+                                @*<span style="--i:13">o</span>*@
+                            </div>
+                            <p>Katarbet ÇarkıFelek ile hergün yeni bir ödül kazanma şansı seni bekliyor!</p>
+                        </div>
+                        @*<ul class="social-list">
+                            <li>
+                                <a href="#" class="facebook-bg">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="twitter-bg">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="google-bg">
+                                    <i class="fa fa-google"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="linkedin-bg">
+                                    <i class="fa fa-linkedin"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#" class="pinterest-bg">
+                                    <i class="fa fa-pinterest"></i>
+                                </a>
+                            </li>
+                        </ul>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login 8 end -->
+    <!-- External JS libraries -->
+    <script src="../assets2/js/jquery-3.6.0.min.js"></script>
+                                    <script src="../assets2/js/bootstrap.bundle.min.js"></script>
+                                    @*<script src="../assets2/js/jquery.validate.min.js"></script>
+            <script src="../assets2/js/app.js"></script>*@
+                                    <!-- Custom JS Script -->
+</body>
+
+</html>
