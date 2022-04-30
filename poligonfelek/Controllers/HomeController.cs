@@ -21,8 +21,6 @@ namespace katarfelek.Controllers
 {
     public class HomeController : Controller
     {
-        //public string cnnstr = ConfigurationManager.ConnectionStrings["DCDatabase"].ConnectionString;
-        //public string cnnstr = ConfigurationManager.ConnectionStrings["DCLocalDatabase"].ConnectionString;
         public SqlConnection cnn;
         public SqlCommand cmd;
         public DataSet ds;
@@ -117,7 +115,7 @@ namespace katarfelek.Controllers
             {
                 using(var check = new katarfelekEntities())
                 {
-                    var client = new RestClient("https://"+domain+".com/Api/PayList?UserName="+usernamee+"&token=62365083e665aeb0e5433871");
+                    var client = new RestClient("https://"+domain+".com/Api/PayList?UserName="+usernamee+"&token={API_TOKEN}");
                     client.Timeout = -1;
                     var request = new RestRequest(Method.POST);
                     IRestResponse response = client.Execute(request);
@@ -172,7 +170,7 @@ namespace katarfelek.Controllers
                     }
 
 
-                    var client = new RestClient("https://"+domain+".com/Api/AddBalance?UserName=" + usernamee + "&token=62365083e665aeb0e5433871&price=" + dictPrize[getsegmentnum]);
+                    var client = new RestClient("https://"+domain+".com/Api/AddBalance?UserName=" + usernamee + "&token={API_TOKEN}&price=" + dictPrize[getsegmentnum]);
                     client.Timeout = -1;
                     var request = new RestRequest(Method.POST);
                     IRestResponse response = client.Execute(request);
@@ -233,7 +231,7 @@ namespace katarfelek.Controllers
         public ActionResult Login(string username,string password)
         {
             string domain = Session["ActiveDomain"].ToString();
-            var client = new RestClient("https://"+domain+".com/Api/CheckCustomer?UserName=" + username.ToLower().Trim() + "&token=62365083e665aeb0e5433871");
+            var client = new RestClient("https://"+domain+".com/Api/CheckCustomer?UserName=" + username.ToLower().Trim() + "&token={API_TOKEN}");
             client.Timeout = -1;
             var request = new RestRequest(Method.POST);
             IRestResponse response = client.Execute(request);

